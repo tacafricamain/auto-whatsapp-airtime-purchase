@@ -1,0 +1,146 @@
+{
+    "version": "6.0",
+    "data_api_version": "3.0",
+    "routing_model": {
+        "AIRTIME_PURCHASE": [
+            "CONFIRM_SCREEN"
+        ]
+    },
+    "screens": [
+        {
+            "id": "AIRTIME_PURCHASE",
+            "title": "Buy Airtime",
+            "data": {
+                "networks": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "__example__": [
+                        {
+                            "id": "mtn",
+                            "title": "MTN"
+                        },
+                        {
+                            "id": "glo",
+                            "title": "Glo"
+                        },
+                        {
+                            "id": "airtel",
+                            "title": "Airtel"
+                        },
+                        {
+                            "id": "9mobile",
+                            "title": "9mobile"
+                        }
+                    ]
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "Form",
+                        "name": "airtime_form",
+                        "children": [
+                            {
+                                "type": "Dropdown",
+                                "label": "Select Network",
+                                "required": true,
+                                "name": "network",
+                                "data-source": "${data.networks}"
+                            },
+                            {
+                                "type": "TextInput",
+                                "label": "Phone Number",
+                                "required": true,
+                                "name": "phone",
+                                "input-type": "phone"
+                            },
+                            {
+                                "type": "TextInput",
+                                "label": "Amount",
+                                "required": true,
+                                "name": "amount",
+                                "input-type": "number"
+                            },
+                            {
+                                "type": "Footer",
+                                "label": "Continue",
+                                "on-click-action": {
+                                    "name": "data_exchange",
+                                    "payload": {
+                                        "network": "${form.network}",
+                                        "phone": "${form.phone}",
+                                        "amount": "${form.amount}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "CONFIRM_SCREEN",
+            "title": "Confirm Purchase",
+            "terminal": true,
+            "data": {
+                "network": {
+                    "type": "string",
+                    "__example__": "mtn"
+                },
+                "phone": {
+                    "type": "string",
+                    "__example__": "08011111111"
+                },
+                "amount": {
+                    "type": "string",
+                    "__example__": "100"
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "TextHeading",
+                        "text": "Please confirm your transaction details below."
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "Network: ${data.network}"
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "Phone: ${data.phone}"
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "Amount: ₦${data.amount}"
+                    },
+                    {
+                        "type": "Footer",
+                        "label": "Confirm & Pay",
+                        "on-click-action": {
+                            "name": "complete",
+                            "payload": {
+                                "confirmed": true,
+                                "network": "${data.network}",
+                                "phone": "${data.phone}",
+                                "amount": "${data.amount}"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

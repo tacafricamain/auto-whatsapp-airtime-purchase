@@ -1,0 +1,54 @@
+{
+    "version": "3.1",
+    "screens": [
+        {
+            "id": "CONFIRM_SCREEN",
+            "title": "Confirm Purchase",
+            "data": {
+                "network": {
+                    "type": "string",
+                    "__example__": "mtn"
+                },
+                "phone": {
+                    "type": "string",
+                    "__example__": "08011111111"
+                },
+                "amount": {
+                    "type": "string",
+                    "__example__": "100"
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "Text",
+                        "text": "Please confirm your details"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Network: ${data.network}"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Phone: ${data.phone}"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Amount: ${data.amount}"
+                    },
+                    {
+                        "type": "Footer",
+                        "label": "Confirm & Pay",
+                        "on-click-action": {
+                            "name": "complete",
+                            "payload": {
+                                "confirmed": true
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
